@@ -28,7 +28,7 @@ public class LonelyTwitterActivity extends Activity {
 	private EditText bodyText;
 	private EditText Text_date;
 	private ListView oldTweetsList;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,14 +42,14 @@ public class LonelyTwitterActivity extends Activity {
 		Button moodButton1 = (Button) findViewById(R.id.mood1);
 		Button moodButton2 = (Button) findViewById(R.id.mood2);
 		Button dateButton = (Button) findViewById(R.id.change_date);
+		Button checkdateButton = (Button) findViewById(R.id.check_date);
+
 
 		dateButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
 				String text = bodyText.getText().toString();
 				Tweet tweet = new Tweet(text);
-				TextView textView = (TextView) findViewById(R.id.current_message);
-				textView.setText("last date: "+tweet.mood.check_date());
 				SimpleDateFormat df = new SimpleDateFormat("dd-MM-YYYY");
 				java.util.Date myDate;
 				try {
@@ -58,6 +58,16 @@ public class LonelyTwitterActivity extends Activity {
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
+
+			}
+		});
+		checkdateButton.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				String text = bodyText.getText().toString();
+				Tweet tweet = new Tweet(text);
+				TextView textView = (TextView) findViewById(R.id.current_message);
+				textView.setText("Current mood date: "+tweet.mood.check_date());
 
 			}
 		});
@@ -91,6 +101,8 @@ public class LonelyTwitterActivity extends Activity {
 			public void onClick(View v) {
 				setResult(RESULT_OK);
 				String text = bodyText.getText().toString();
+                Tweet tweet = new Tweet(text);
+				text = text + tweet.total_mood;
 				saveInFile(text, new Date(System.currentTimeMillis()));
 				finish();
 

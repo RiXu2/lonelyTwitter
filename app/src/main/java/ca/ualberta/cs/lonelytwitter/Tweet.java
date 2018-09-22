@@ -12,7 +12,7 @@ public class Tweet {
     public Tweet(String message){
         this.message = message;
         this.mood = new mood_2();
-        this.total_mood = "";
+        this.total_mood = this.mood.curr_mood + this.mood.check_date();
     }
     public Tweet(String message, Date date){
         this.message = message;
